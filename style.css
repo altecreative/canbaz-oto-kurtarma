@@ -408,11 +408,36 @@ a {
     font-size: 0.9rem;
 }
 
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.marquee-container {
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
     gap: 30px;
+    padding: 20px 0;
     margin-top: 40px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: rgba(255,255,255,0.01);
+}
+
+.marquee-content {
+    display: flex;
+    gap: 30px;
+    animation: scroll 40s linear infinite;
+    padding-left: 30px;
+}
+
+.marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% - 30px)); }
 }
 
 .review-card {
@@ -421,6 +446,9 @@ a {
     border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.05);
     transition: var(--transition);
+    width: 350px;
+    flex-shrink: 0;
+    white-space: normal;
 }
 
 .review-card:hover {
