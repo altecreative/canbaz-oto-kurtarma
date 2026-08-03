@@ -127,6 +127,7 @@ a {
     border-radius: 30px;
     font-weight: 800;
     font-size: 1.1rem;
+    white-space: nowrap;
     transition: var(--transition);
 }
 
@@ -616,4 +617,18 @@ footer p {
     .hero-buttons { flex-direction: column; width: 100%; }
     .btn { width: 100%; justify-content: center; }
     .section { padding: 60px 0; }
+    
+    .nav-phone {
+        font-size: 0.95rem;
+        padding: 8px 15px;
+    }
+    .logo {
+        font-size: 1.1rem;
+        gap: 5px;
+        flex-wrap: wrap;
+        max-width: 150px; /* Forces text to wrap beautifully */
+    }
+    .logo i {
+        font-size: 1.3rem;
+    }
 }
