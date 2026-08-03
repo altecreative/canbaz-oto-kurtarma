@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (track && sliderContainer) {
         let isMobile = window.innerWidth <= 768;
+        let slideInterval;
+        let isAnimating = false;
         
         // Helper to update container height on mobile so exactly 3 cards fit
         const updateMobileHeight = () => {
@@ -76,8 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial setup
         setTimeout(updateMobileHeight, 500); // wait for styles to apply
 
-        // Sliding interval
-        setInterval(() => {
+        const slideNext = () => {
+            if (isAnimating) return;
+            isAnimating = true;
             const card = track.firstElementChild;
             if (!card) return;
             
@@ -85,22 +88,68 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (isMobile) {
                 const cardHeight = card.offsetHeight;
-                const gap = 30;
-                track.style.transform = `translateY(-${cardHeight + gap}px)`;
+                track.style.transform = `translateY(-${cardHeight + 30}px)`;
             } else {
                 const cardWidth = card.offsetWidth;
-                const gap = 30;
-                track.style.transform = `translateX(-${cardWidth + gap}px)`;
+                track.style.transform = `translateX(-${cardWidth + 30}px)`;
             }
 
-            // Wait for transition to finish, then move element to back
             setTimeout(() => {
                 track.style.transition = 'none';
                 track.style.transform = 'none';
                 track.appendChild(card);
-                updateMobileHeight(); // update height in case text lengths changed it
+                updateMobileHeight();
+                isAnimating = false;
             }, 600);
+        };
+
+        const slidePrev = () => {
+            if (isAnimating) return;
+            isAnimating = true;
+            const card = track.lastElementChild;
+            if (!card) return;
             
-        }, 4000); // Slide every 4 seconds
+            track.style.transition = 'none';
+            track.insertBefore(card, track.firstElementChild);
+            
+            if (isMobile) {
+                const cardHeight = card.offsetHeight;
+                track.style.transform = `translateY(-${cardHeight + 30}px)`;
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    track.style.transform = 'none';
+                }, 10);
+            } else {
+                const cardWidth = card.offsetWidth;
+                track.style.transform = `translateX(-${cardWidth + 30}px)`;
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    track.style.transform = 'none';
+                }, 10);
+            }
+
+            setTimeout(() => {
+                updateMobileHeight();
+                isAnimating = false;
+            }, 600);
+        };
+
+        const startAutoSlide = () => {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(slideNext, 4000);
+        };
+
+        const resetAutoSlide = () => {
+            startAutoSlide();
+        };
+
+        // Attach buttons
+        document.getElementById('nextReview')?.addEventListener('click', () => { slideNext(); resetAutoSlide(); });
+        document.getElementById('prevReview')?.addEventListener('click', () => { slidePrev(); resetAutoSlide(); });
+        document.getElementById('nextReviewMobile')?.addEventListener('click', () => { slideNext(); resetAutoSlide(); });
+        document.getElementById('prevReviewMobile')?.addEventListener('click', () => { slidePrev(); resetAutoSlide(); });
+
+        // Start auto slide
+        startAutoSlide();
     }
 });
