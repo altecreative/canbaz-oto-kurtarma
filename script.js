@@ -41,4 +41,66 @@ document.addEventListener('DOMContentLoaded', () => {
         const heroReveals = document.querySelectorAll('.hero .reveal');
         heroReveals.forEach(reveal => reveal.classList.add('active'));
     }, 100);
+
+    // Reviews Slider Logic
+    const sliderContainer = document.getElementById('sliderContainer');
+    const track = document.getElementById('reviewSlider');
+    
+    if (track && sliderContainer) {
+        let isMobile = window.innerWidth <= 768;
+        
+        // Helper to update container height on mobile so exactly 3 cards fit
+        const updateMobileHeight = () => {
+            if (isMobile) {
+                const cards = track.children;
+                if (cards.length >= 3) {
+                    let height = 0;
+                    for (let i = 0; i < 3; i++) {
+                        height += cards[i].offsetHeight;
+                    }
+                    height += 60; // 2 gaps of 30px
+                    sliderContainer.style.height = height + 'px';
+                }
+            } else {
+                sliderContainer.style.height = 'auto';
+            }
+        };
+
+        window.addEventListener('resize', () => {
+            isMobile = window.innerWidth <= 768;
+            track.style.transition = 'none';
+            track.style.transform = 'none';
+            updateMobileHeight();
+        });
+
+        // Initial setup
+        setTimeout(updateMobileHeight, 500); // wait for styles to apply
+
+        // Sliding interval
+        setInterval(() => {
+            const card = track.firstElementChild;
+            if (!card) return;
+            
+            track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+            
+            if (isMobile) {
+                const cardHeight = card.offsetHeight;
+                const gap = 30;
+                track.style.transform = `translateY(-${cardHeight + gap}px)`;
+            } else {
+                const cardWidth = card.offsetWidth;
+                const gap = 30;
+                track.style.transform = `translateX(-${cardWidth + gap}px)`;
+            }
+
+            // Wait for transition to finish, then move element to back
+            setTimeout(() => {
+                track.style.transition = 'none';
+                track.style.transform = 'none';
+                track.appendChild(card);
+                updateMobileHeight(); // update height in case text lengths changed it
+            }, 600);
+            
+        }, 4000); // Slide every 4 seconds
+    }
 });
