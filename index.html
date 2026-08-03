@@ -34,10 +34,15 @@
     <!-- Fonts: Outfit for a modern look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"></noscript>
 
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- CSS -->
@@ -165,7 +170,7 @@
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <h2 class="subtitle reveal">7/24 KESİNTİSİZ HİZMET</h2>
+            <p class="subtitle reveal">7/24 KESİNTİSİZ HİZMET</p>
             <h1 class="title reveal delay-1">Ezine Oto Çekici <br><span>Canbaz Kurtarma & Lastik</span></h1>
             <p class="description reveal delay-2">Ezine, Geyikli ve Çanakkale genelinde en hızlı, en güvenilir oto
                 kurtarma, çekici ve lastik yol yardım hizmeti.</p>
@@ -458,6 +463,7 @@
                 <div class="contact-map reveal delay-1">
                     <!-- Embed Google Maps pointing generally to Geyikli/Ezine -->
                     <iframe
+                        title="Canbaz Oto Kurtarma - Geyikli, Ezine, Çanakkale Haritası"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48695.53676239401!2d26.160162597405202!3d39.799753176523916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14baeece13264c79%3A0xe5a1b32d1633513!2sGeyikli%2C%20Ezine%2F%C3%87anakkale!5e0!3m2!1str!2str!4v1690000000000!5m2!1str!2str"
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
